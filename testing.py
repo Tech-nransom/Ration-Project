@@ -25,12 +25,12 @@ class Database:
 			mycursor.execute(sql)
 			mydb.commit()
 
-			sql = "create table customers(user_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(30), address varchar(50), age int, PRIMARY KEY (user_id));" 
+			sql = "create table customers(user_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(30), family_members varchar(50), PRIMARY KEY (user_id));" 
 			print(sql)
 			mycursor.execute(sql)
 			mydb.commit()
 
-			sql = "create table items(user_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(30), address varchar(50), age int, PRIMARY KEY (user_id));" 
+			sql = "create table items(user_id INT(11) NOT NULL AUTO_INCREMENT, alloted_rice float, remaining_amount float, PRIMARY KEY (user_id));" 
 			print(sql)
 			mycursor.execute(sql)
 			mydb.commit()
