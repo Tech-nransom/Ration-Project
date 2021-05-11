@@ -60,3 +60,17 @@ class Database:
 		except Exception as e:
 			print("username or password is wrong")
 			return [],False
+
+
+if __name__ == "__main__":
+	username = input()
+	password = input()
+	database = input()
+	obj = Database(username,password,database)
+	obj.add_customer(name = "Yugandhar",family_members=4,user_id=3)
+	obj.add_customer(name = "Hemant",family_members=4,user_id=5)
+	obj.add_customer(name = "Vandana",family_members=4,user_id=6)
+
+	obj.add_items(alloted_rice = 5,remaining_amount=30,user_id=3)
+	obj.add_items(alloted_rice = 6,remaining_amount=60,user_id=6)
+	obj.add_items(alloted_rice = 5,remaining_amount=50,user_id=5)
