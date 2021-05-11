@@ -18,6 +18,10 @@ class Database:
 				sql = f"create database {database};"
 				self.mycursor.execute(sql)
 				self.mydb.commit()
+				
+				sql =f"use {database};"
+				self.mycursor.execute(sql)
+
 
 			sql = "create table IF NOT EXISTS customers(user_id int NOT NULL, name varchar(30) NOT NULL, family_members int NOT NULL, PRIMARY KEY (user_id));" 
 			print(sql)
