@@ -68,6 +68,7 @@ class Database:
 			return mydb,True
 		except Exception as e:
 			print("username or password is wrong")
+			print(e)
 			return [],False
 
 	def update(self,user_id,alloted_rice,remaining_amount):

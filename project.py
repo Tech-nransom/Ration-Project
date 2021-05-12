@@ -65,6 +65,7 @@ class Administrator:
 	def doTransaction(self,key,position):
 		name = input("Enter the Name:")
 		family = int(input("Enter Family members:"))
+		temp = Database(self.username,self.password,self.database)
 		temp.add_customer(name,family,key)
 		perPerson = 10
 		alloted_rice,remaining_amount,user_id,position = perPerson*family,perPerson*family,key,position
@@ -100,12 +101,13 @@ class Application(Administrator,User):
 
 		# 		from diff file
 		# pass
+		self.username = input("Username:")
+		self.password = input("Password:")
+		self.database = input("Database name:")
 		obj = Operations()
-		key,position = (obj.add())
+		key,position = obj.add()
 		print(key)
-		self.username,self.password,self.database = input("Username:"),input("Password:"),input("Database name:")
-		temp = Database(self.username,self.password,self.database)
-		# name,family_members,user_id
+		print(position)
 		self.doTransaction(key,position)
 		
  		
@@ -113,10 +115,9 @@ class Application(Administrator,User):
 	def delete_rec(self):
 		# TODO: Delete record by admin
 		obj = Operations()
-		obj.delete()
 		temp = Database(self.username,self.password,self.database)
 		key,position = temp.search()
-		if position not None:
+		if position != None:
 			obj.delete(temp.getPosition(key))
 			temp.delete(key)
 		else:

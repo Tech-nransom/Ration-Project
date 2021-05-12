@@ -35,7 +35,6 @@ class Operations:
 		pass
 
 	def add(self):
-
 		try:
 		    f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
 
@@ -47,8 +46,7 @@ class Operations:
 		    print('Exception message: ' + str(e))
 		    return -1,-1
 		    exit(1)
-
-		## Gets some sensor information
+		#Gets some sensor information
 		print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
 
 		
@@ -94,7 +92,10 @@ class Operations:
 			positionNumber = f.storeTemplate()
 			print('Finger enrolled successfully!')
 			print('New template position #' + str(positionNumber))
-			return self.getHash(f,positionNumber),int(positionNumber)
+
+			# positionNumber = 9
+			Hash = self.getHash(f,positionNumber)
+			return Hash,positionNumber
 
 		except Exception as e:
 		    print('Operation failed!')
@@ -152,21 +153,22 @@ class Operations:
 		    exit(1)
 
 	def getHash(self,fingerPrint,positionNumber):
-		fingerPrint.convertImage(0x01)
+		# fingerPrint.convertImage(0x01)
 
-		## Searchs template
-		result = fingerPrint.searchTemplate()
+		# ## Searchs template
+		# result = fingerPrint.searchTemplate()
 
-		
+		print("Inside getHash")
 		# accuracyScore = result[1]
 		if positionNumber != -1:
-			fingerPrint.loadTemplate(positionNumber, 0x01)
+			# fingerPrint.loadTemplate(positionNumber, 0x01)
 
-			## Downloads the characteristics of template loaded in charbuffer 1
-			characterics = str(fingerPrint.downloadCharacteristics(0x01)).encode('utf-8')
+			# ## Downloads the characteristics of template loaded in charbuffer 1
+			# characterics = str(fingerPrint.downloadCharacteristics(0x01)).encode('utf-8')
 
-			## Hashes characteristics of template
-			return (hashlib.sha256(characterics).hexdigest())
+			# ## Hashes characteristics of template
+			# return (hashlib.sha256(characterics).hexdigest())
+			return 0
 		else:
 			return -1
 
