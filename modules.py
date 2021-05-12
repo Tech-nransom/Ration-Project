@@ -137,22 +137,11 @@ class Operations:
 		        return None
 		        exit(0)
 		    else:
-		        print('Found template at position #' + str(positionNumber))
-		        print('The accuracy score is: ' + str(accuracyScore))
-
-		    ## OPTIONAL stuff
-		    ##
-
-		    ## Loads the found template to charbuffer 1
-			   	f.loadTemplate(positionNumber, 0x01)
-
-			    ## Downloads the characteristics of template loaded in charbuffer 1
-			    characterics = str(f.downloadCharacteristics(0x01)).encode('utf-8')
-
-			    ## Hashes characteristics of template
-			    # print('SHA-2 hash of template: ' + hashlib.sha256(characterics).hexdigest())
-
-				return hashlib.sha256(characterics).hexdigest()
+		    	print('Found template at position #' + str(positionNumber))
+		    	print('The accuracy score is: ' + str(accuracyScore))
+		    	f.loadTemplate(positionNumber, 0x01)
+		    	characterics = str(f.downloadCharacteristics(0x01)).encode('utf-8')
+		    	return hashlib.sha256(characterics).hexdigest()
 		except Exception as e:
 		    print('Operation failed!')
 		    print('Exception message: ' + str(e))
