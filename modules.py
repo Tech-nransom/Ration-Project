@@ -134,6 +134,7 @@ class Operations:
 
 		    if ( positionNumber == -1 ):
 		        print('No match found!')
+		        return None
 		        exit(0)
 		    else:
 		        print('Found template at position #' + str(positionNumber))
@@ -149,8 +150,9 @@ class Operations:
 		    characterics = str(f.downloadCharacteristics(0x01)).encode('utf-8')
 
 		    ## Hashes characteristics of template
-		    print('SHA-2 hash of template: ' + hashlib.sha256(characterics).hexdigest())
+		    # print('SHA-2 hash of template: ' + hashlib.sha256(characterics).hexdigest())
 
+			return hashlib.sha256(characterics).hexdigest()
 		except Exception as e:
 		    print('Operation failed!')
 		    print('Exception message: ' + str(e))

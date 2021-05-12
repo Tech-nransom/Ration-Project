@@ -94,6 +94,7 @@ class Application(Administrator,User):
 		obj = Operations()
 		print(obj.add())
 
+
 	def delete_rec(self):
 		# TODO: Delete record by admin
 		obj = Operations()
@@ -104,7 +105,7 @@ class Application(Administrator,User):
 		# TODO: update the existing record by admin 
 		#		Give appropriate msg if rec not present
 		obj = Operations()
-		obj.update()
+		print(obj.search())
 		# pass
 
 def main():
