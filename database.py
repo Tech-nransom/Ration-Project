@@ -23,12 +23,12 @@ class Database:
 				self.mycursor.execute(sql)
 
 
-			sql = "create table IF NOT EXISTS customers(user_id varchar NOT NULL, name varchar(30) NOT NULL, family_members int NOT NULL, PRIMARY KEY (user_id));" 
+			sql = "create table IF NOT EXISTS customers(user_id varchar(70) NOT NULL, name varchar(30) NOT NULL, family_members int NOT NULL, PRIMARY KEY (user_id));" 
 			print(sql)
 			self.mycursor.execute(sql)
 			self.mydb.commit()
 
-			sql = "create table IF NOT EXISTS items(order_id INT(11) NOT NULL AUTO_INCREMENT, alloted_rice float NOT NULL, remaining_amount float NOT NULL, user_id varchar, PRIMARY KEY (order_id), FOREIGN KEY (user_id) REFERENCES customers(user_id) ON DELETE CASCADE ON UPDATE CASCADE);" 
+			sql = "create table IF NOT EXISTS items(order_id INT(11) NOT NULL AUTO_INCREMENT, alloted_rice float NOT NULL, remaining_amount float NOT NULL, user_id varchar(70), PRIMARY KEY (order_id), FOREIGN KEY (user_id) REFERENCES customers(user_id) ON DELETE CASCADE ON UPDATE CASCADE);" 
 			print(sql)
 			self.mycursor.execute(sql)
 			self.mydb.commit()
