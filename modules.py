@@ -45,6 +45,7 @@ class Operations:
 		except Exception as e:
 		    print('The fingerprint sensor could not be initialized!')
 		    print('Exception message: ' + str(e))
+		    return -1,-1
 		    exit(1)
 
 		## Gets some sensor information
@@ -98,6 +99,7 @@ class Operations:
 		except Exception as e:
 		    print('Operation failed!')
 		    print('Exception message: ' + str(e))
+		    return -1,-1
 		    exit(1)
 
 	def search(self):
@@ -110,6 +112,7 @@ class Operations:
 		except Exception as e:
 		    print('The fingerprint sensor could not be initialized!')
 		    print('Exception message: ' + str(e))
+		  
 		    exit(1)
 
 		## Gets some sensor information
@@ -134,7 +137,7 @@ class Operations:
 
 		    if ( positionNumber == -1 ):
 		        print('No match found!')
-		        return None,None
+		        return -1,-1
 		        exit(0)
 		    else:
 		    	print('Found template at position #' + str(positionNumber))
@@ -145,15 +148,16 @@ class Operations:
 		except Exception as e:
 		    print('Operation failed!')
 		    print('Exception message: ' + str(e))
+		    return -1,-1
 		    exit(1)
 
-	def getHash(self,fingerPrint,no):
+	def getHash(self,fingerPrint,positionNumber):
 		fingerPrint.convertImage(0x01)
 
 		## Searchs template
 		result = fingerPrint.searchTemplate()
 
-		positionNumber = no
+		
 		# accuracyScore = result[1]
 		if positionNumber != -1:
 			fingerPrint.loadTemplate(positionNumber, 0x01)
@@ -164,7 +168,7 @@ class Operations:
 			## Hashes characteristics of template
 			return (hashlib.sha256(characterics).hexdigest())
 		else:
-			return None
+			return -1
 
 # # Program for delete
 
