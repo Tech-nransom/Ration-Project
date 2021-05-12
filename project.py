@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from modules import Operations
+from database import *
 
 class Administrator:
 	def __init__(self):
@@ -92,8 +93,11 @@ class Application(Administrator,User):
 		# 		from diff file
 		# pass
 		obj = Operations()
-		print(obj.add())
-
+		key = (obj.add())
+		temp = Database()
+		# name,family_members,user_id
+		temp.add_customer()
+ 		
 
 	def delete_rec(self):
 		# TODO: Delete record by admin
@@ -105,7 +109,7 @@ class Application(Administrator,User):
 		# TODO: update the existing record by admin 
 		#		Give appropriate msg if rec not present
 		obj = Operations()
-		print(obj.search())
+		key = (obj.search())
 		# pass
 
 def main():
