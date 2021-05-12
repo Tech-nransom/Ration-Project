@@ -93,7 +93,7 @@ class Operations:
 			positionNumber = f.storeTemplate()
 			print('Finger enrolled successfully!')
 			print('New template position #' + str(positionNumber))
-			return self.getHash(f)
+			return self.getHash(f,positionNumber)
 
 		except Exception as e:
 		    print('Operation failed!')
@@ -156,14 +156,14 @@ class Operations:
 		    print('Exception message: ' + str(e))
 		    exit(1)
 
-	def getHash(self,fingerPrint):
+	def getHash(self,fingerPrint,no):
 		fingerPrint.convertImage(0x01)
 
 		## Searchs template
 		result = fingerPrint.searchTemplate()
 
-		positionNumber = result[0]
-		accuracyScore = result[1]
+		positionNumber = no
+		# accuracyScore = result[1]
 		if positionNumber != -1:
 			fingerPrint.loadTemplate(positionNumber, 0x01)
 
