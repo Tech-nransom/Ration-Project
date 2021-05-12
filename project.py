@@ -96,7 +96,9 @@ class Application(Administrator,User):
 		key = (obj.add())
 		temp = Database()
 		# name,family_members,user_id
-		temp.add_customer()
+		name = input("Enter the Name:")
+		family = int(input("Enter Family members:"))
+		temp.add_customer(name,family,key)
  		
 
 	def delete_rec(self):
@@ -110,7 +112,7 @@ class Application(Administrator,User):
 		#		Give appropriate msg if rec not present
 		obj = Operations()
 		key = (obj.search())
-		# pass
+		
 
 def main():
 	root = Tk()

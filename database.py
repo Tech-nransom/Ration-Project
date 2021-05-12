@@ -23,12 +23,12 @@ class Database:
 				self.mycursor.execute(sql)
 
 
-			sql = "create table IF NOT EXISTS customers(user_id int NOT NULL, name varchar(30) NOT NULL, family_members int NOT NULL, PRIMARY KEY (user_id));" 
+			sql = "create table IF NOT EXISTS customers(user_id varchar NOT NULL, name varchar(30) NOT NULL, family_members int NOT NULL, PRIMARY KEY (user_id));" 
 			print(sql)
 			self.mycursor.execute(sql)
 			self.mydb.commit()
 
-			sql = "create table IF NOT EXISTS items(order_id INT(11) NOT NULL AUTO_INCREMENT, alloted_rice float NOT NULL, remaining_amount float NOT NULL, user_id int, PRIMARY KEY (order_id), FOREIGN KEY (user_id) REFERENCES customers(user_id) ON DELETE CASCADE ON UPDATE CASCADE);" 
+			sql = "create table IF NOT EXISTS items(order_id INT(11) NOT NULL AUTO_INCREMENT, alloted_rice float NOT NULL, remaining_amount float NOT NULL, user_id varchar, PRIMARY KEY (order_id), FOREIGN KEY (user_id) REFERENCES customers(user_id) ON DELETE CASCADE ON UPDATE CASCADE);" 
 			print(sql)
 			self.mycursor.execute(sql)
 			self.mydb.commit()
@@ -36,7 +36,7 @@ class Database:
 			print("something went wrong")
 
 	def getRemainingRice(self,user_id):
-		sql = f"select remaining_amount from items where user_id = {user_id};"
+		sql = f"select remaining_amount from items where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 
 	def add_customer(self,name,family_members,user_id):
@@ -71,19 +71,19 @@ class Database:
 			return [],False
 
 	def update(self,user_id,alloted_rice,remaining_amount):
-		sql = f"update items set alloted_rice = '{alloted_rice}',remaining_amount = '{remaining_amount}' where user_id = {user_id};"
+		sql = f"update items set alloted_rice = '{alloted_rice}',remaining_amount = '{remaining_amount}' where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 		self.mydb.commit()
 		print("Updated successfully")
 
 	def delete(self,user_id):
-		sql = f"delete from customers where user_id = {user_id};"
+		sql = f"delete from customers where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 		self.mydb.commit()
 		print("Deleted successfully")
 
 	def getAllotment(self,user_id):
-		sql = f"select alloted_rice from items where user_id = {user_id};"
+		sql = f"select alloted_rice from items where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 		val = (self.mycursor.fetchone())
 		return val[0] if val else 0
