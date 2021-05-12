@@ -157,18 +157,18 @@ class Operations:
 		    exit(1)
 
 	def getHash(self,fingerPrint):
-		f.convertImage(0x01)
+		fingerPrint.convertImage(0x01)
 
 		## Searchs template
-		result = f.searchTemplate()
+		result = fingerPrint.searchTemplate()
 
 		positionNumber = result[0]
 		accuracyScore = result[1]
 		if positionNumber != -1:
-			f.loadTemplate(positionNumber, 0x01)
+			fingerPrint.loadTemplate(positionNumber, 0x01)
 
 			## Downloads the characteristics of template loaded in charbuffer 1
-			characterics = str(f.downloadCharacteristics(0x01)).encode('utf-8')
+			characterics = str(fingerPrint.downloadCharacteristics(0x01)).encode('utf-8')
 
 			## Hashes characteristics of template
 			return (hashlib.sha256(characterics).hexdigest())
