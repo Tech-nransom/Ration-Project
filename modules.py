@@ -93,7 +93,7 @@ class Operations:
 			positionNumber = f.storeTemplate()
 			print('Finger enrolled successfully!')
 			print('New template position #' + str(positionNumber))
-			return self.getHash(f,positionNumber),positionNumber
+			return self.getHash(f,positionNumber),int(positionNumber)
 
 		except Exception as e:
 		    print('Operation failed!')
@@ -162,7 +162,7 @@ class Operations:
 			characterics = str(fingerPrint.downloadCharacteristics(0x01)).encode('utf-8')
 
 			## Hashes characteristics of template
-			return (hashlib.sha256(characterics).hexdigest()),positionNumber
+			return (hashlib.sha256(characterics).hexdigest())
 		else:
 			return None
 
