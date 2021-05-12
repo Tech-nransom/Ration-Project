@@ -62,6 +62,14 @@ class Administrator:
 
 			self.password.delete(0,END)
 
+	def doTransaction(self,key,position):
+		name = input("Enter the Name:")
+		family = int(input("Enter Family members:"))
+		temp.add_customer(name,family,key)
+		perPerson = 10
+		alloted_rice,remaining_amount,user_id,position = perPerson*family,perPerson*family,key,position
+		temp.add_items(alloted_rice,remaining_amount,user_id,position)
+
 class User:
 	def __init__(self):
 		pass
@@ -93,27 +101,33 @@ class Application(Administrator,User):
 		# 		from diff file
 		# pass
 		obj = Operations()
-		key = (obj.add())
+		key,position = (obj.add())
 		print(key)
-		username,password,database = input("Username:"),input("Password:"),input("Database name:")
-		temp = Database(username,password,database)
+		self.username,self.password,self.database = input("Username:"),input("Password:"),input("Database name:")
+		temp = Database(self.username,self.password,self.database)
 		# name,family_members,user_id
-		name = input("Enter the Name:")
-		family = int(input("Enter Family members:"))
-		temp.add_customer(name,family,key)
+		self.doTransaction(key,position)
+		
  		
 
 	def delete_rec(self):
 		# TODO: Delete record by admin
 		obj = Operations()
 		obj.delete()
-		# pass
+		temp = Database(self.username,self.password,self.database)
+		key,position = temp.search()
+		if position not None:
+			obj.delete(temp.getPosition(key))
+			temp.delete(key)
+		else:
+			print("Position not found")
+
 
 	def update_rec(self):
 		# TODO: update the existing record by admin 
 		#		Give appropriate msg if rec not present
 		obj = Operations()
-		key = (obj.search())
+		key,position = (obj.search())
 		
 
 def main():

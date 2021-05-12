@@ -3,7 +3,7 @@ import hashlib
 from pyfingerprint.pyfingerprint import PyFingerprint
 
 class Operations:
-	def delete(self):
+	def delete(self,position):
 		try:
 		    f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
 
@@ -20,7 +20,7 @@ class Operations:
 
 		## Tries to delete the template of the finger
 		try:
-		    positionNumber = input('Please enter the template position you want to delete: ')
+		    positionNumber = position
 		    positionNumber = int(positionNumber)
 
 		    if ( f.deleteTemplate(positionNumber) == True ):
@@ -93,7 +93,7 @@ class Operations:
 			positionNumber = f.storeTemplate()
 			print('Finger enrolled successfully!')
 			print('New template position #' + str(positionNumber))
-			return self.getHash(f,positionNumber)
+			return self.getHash(f,positionNumber),positionNumber
 
 		except Exception as e:
 		    print('Operation failed!')
@@ -134,14 +134,14 @@ class Operations:
 
 		    if ( positionNumber == -1 ):
 		        print('No match found!')
-		        return None
+		        return None,None
 		        exit(0)
 		    else:
 		    	print('Found template at position #' + str(positionNumber))
 		    	print('The accuracy score is: ' + str(accuracyScore))
 		    	f.loadTemplate(positionNumber, 0x01)
 		    	characterics = str(f.downloadCharacteristics(0x01)).encode('utf-8')
-		    	return hashlib.sha256(characterics).hexdigest()
+		    	return hashlib.sha256(characterics).hexdigest(),positionNumber
 		except Exception as e:
 		    print('Operation failed!')
 		    print('Exception message: ' + str(e))
@@ -162,7 +162,7 @@ class Operations:
 			characterics = str(fingerPrint.downloadCharacteristics(0x01)).encode('utf-8')
 
 			## Hashes characteristics of template
-			return (hashlib.sha256(characterics).hexdigest())
+			return (hashlib.sha256(characterics).hexdigest()),positionNumber
 		else:
 			return None
 

@@ -28,7 +28,7 @@ class Database:
 			self.mycursor.execute(sql)
 			self.mydb.commit()
 
-			sql = "create table IF NOT EXISTS items(order_id INT(11) NOT NULL AUTO_INCREMENT, alloted_rice float NOT NULL, remaining_amount float NOT NULL, user_id varchar(70), PRIMARY KEY (order_id), FOREIGN KEY (user_id) REFERENCES customers(user_id) ON DELETE CASCADE ON UPDATE CASCADE);" 
+			sql = "create table IF NOT EXISTS items(order_id INT(11) NOT NULL, alloted_rice float NOT NULL, remaining_amount float NOT NULL, user_id varchar(70), PRIMARY KEY (order_id), FOREIGN KEY (user_id) REFERENCES customers(user_id) ON DELETE CASCADE ON UPDATE CASCADE);" 
 			print(sql)
 			self.mycursor.execute(sql)
 			self.mydb.commit()
@@ -48,8 +48,8 @@ class Database:
 		except :
 			print("Already Exists")
 
-	def add_items(self,alloted_rice,remaining_amount,user_id):
-		sql = f"insert into items(alloted_rice,remaining_amount,user_id) values('{alloted_rice}','{remaining_amount}','{user_id}');"
+	def add_items(self,alloted_rice,remaining_amount,user_id,position):
+		sql = f"insert into items(alloted_rice,remaining_amount,user_id,order_id) values('{alloted_rice}','{remaining_amount}','{user_id}','{position}');"
 		try:
 			self.mycursor.execute(sql)
 			self.mydb.commit()
@@ -89,16 +89,29 @@ class Database:
 		return val[0] if val else 0
 
 	def getRemaining(self,user_id):
-		sql = f"select remaining_amount from items where user_id = {user_id};"
+		sql = f"select remaining_amount from items where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 		val = (self.mycursor.fetchone())
 		return val[0] if val else 0
 
 	def isPresent(self,user_id):
-		sql = f"select * from items where user_id = {user_id};"
+		sql = f"select * from items where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 		val = (self.mycursor.fetchone())
 		return True if val else False
+
+	def getPosition(self,user_id):
+		sql = f"select order_id from items where user_id = '{user_id}';"
+		self.mycursor.execute(sql)
+		val = (self.mycursor.fetchone())
+		return int(val[0]) if val else None
+
+	def getFamilyMem(self,user_id):
+		sql = f"select family_members from customers where user_id = '{user_id}';"
+		self.mycursor.execute(sql)
+		val = (self.mycursor.fetchone())
+		return int(val[0]) if val else None
+
 
 
 
