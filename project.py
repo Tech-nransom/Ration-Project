@@ -94,8 +94,8 @@ class Application(Administrator,User):
 		# pass
 		obj = Operations()
 		key = (obj.add())
-		username,password,database = input(),input(),input()
-		temp = Database()
+		username,password,database = input("Username:"),input("Password:"),input("Database name:")
+		temp = Database(username,password,database)
 		# name,family_members,user_id
 		name = input("Enter the Name:")
 		family = int(input("Enter Family members:"))
