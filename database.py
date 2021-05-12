@@ -107,7 +107,8 @@ if __name__ == "__main__":
 	password = input()
 	database = input()
 	obj = Database(username,password,database)
-	obj.add_customer(name = "Yugandhar",family_members=4,user_id=3)
+	key = "[Enter key here]"
+	obj.add_customer(name = "Yugandhar",family_members=4,user_id=key)
 	obj.add_customer(name = "Hemant",family_members=4,user_id=5)
 	obj.add_customer(name = "Vandana",family_members=4,user_id=6)
 
