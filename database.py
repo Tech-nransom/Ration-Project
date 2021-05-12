@@ -7,7 +7,7 @@ class Database:
 		self.database = database
 		self.mydb,status = self.checkIfAllright(username,password)
 		if status:
-			self.mycursor = self.mydb.cursor()
+			self.mycursor = self.mydb.cursor(buffered=True)
 
 			try:
 				sql =f"use {database};"
@@ -82,6 +82,24 @@ class Database:
 		self.mydb.commit()
 		print("Deleted successfully")
 
+	def getAllotment(self,user_id):
+		sql = f"select alloted_rice from items where user_id = {user_id};"
+		self.mycursor.execute(sql)
+		val = (self.mycursor.fetchone())
+		return val[0] if val else 0
+
+	def getRemaining(self,user_id):
+		sql = f"select remaining_amount from items where user_id = {user_id};"
+		self.mycursor.execute(sql)
+		val = (self.mycursor.fetchone())
+		return val[0] if val else 0
+
+	def isPresent(self,user_id):
+		sql = f"select * from items where user_id = {user_id};"
+		self.mycursor.execute(sql)
+		val = (self.mycursor.fetchone())
+		return True if val else False
+
 
 
 if __name__ == "__main__":
@@ -93,10 +111,16 @@ if __name__ == "__main__":
 	obj.add_customer(name = "Hemant",family_members=4,user_id=5)
 	obj.add_customer(name = "Vandana",family_members=4,user_id=6)
 
-	obj.add_items(alloted_rice = 5,remaining_amount=30,user_id=3)
-	obj.add_items(alloted_rice = 6,remaining_amount=60,user_id=6)
-	obj.add_items(alloted_rice = 5,remaining_amount=50,user_id=5)
+	# obj.add_items(alloted_rice = 5,remaining_amount=30,user_id=3)
+	# obj.add_items(alloted_rice = 6,remaining_amount=60,user_id=6)
+	# obj.add_items(alloted_rice = 5,remaining_amount=50,user_id=5)
 
 
 	obj.update(5,333,52)
-	obj.delete(4)
+	obj.delete(5)
+	print(obj.getAllotment(5))
+	print(obj.isPresent(99))
+	print(obj.isPresent(9))
+	print(obj.isPresent(3))
+	print(obj.isPresent(4))
+	print(obj.getRemaining(99))
