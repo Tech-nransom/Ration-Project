@@ -41,16 +41,21 @@ class Database:
 
 	def add_customer(self,name,family_members,user_id):
 		sql = f"insert into customers(name,family_members,user_id) values('{name}','{family_members}','{user_id}');"
-		self.mycursor.execute(sql)
-		self.mydb.commit()
-		print("Insertion successfull")
+		try:
+			self.mycursor.execute(sql)
+			self.mydb.commit()
+			print("Insertion successfull")
+		except :
+			print("Already Exists")
 
 	def add_items(self,alloted_rice,remaining_amount,user_id):
 		sql = f"insert into items(alloted_rice,remaining_amount,user_id) values('{alloted_rice}','{remaining_amount}','{user_id}');"
-		self.mycursor.execute(sql)
-		self.mydb.commit()
-		print("Insertion successfull")
-
+		try:
+			self.mycursor.execute(sql)
+			self.mydb.commit()
+			print("Insertion successfull")
+		except :
+			print("Already Exists")
 
 
 	def checkIfAllright(self,username,password):
@@ -65,6 +70,19 @@ class Database:
 			print("username or password is wrong")
 			return [],False
 
+	def update(self,user_id,alloted_rice,remaining_amount):
+		sql = f"update items set alloted_rice = '{alloted_rice}',remaining_amount = '{remaining_amount}' where user_id = {user_id};"
+		self.mycursor.execute(sql)
+		self.mydb.commit()
+		print("Updated successfully")
+
+	def delete(self,user_id):
+		sql = f"delete from customers where user_id = {user_id};"
+		self.mycursor.execute(sql)
+		self.mydb.commit()
+		print("Deleted successfully")
+
+
 
 if __name__ == "__main__":
 	username = input()
@@ -78,3 +96,7 @@ if __name__ == "__main__":
 	obj.add_items(alloted_rice = 5,remaining_amount=30,user_id=3)
 	obj.add_items(alloted_rice = 6,remaining_amount=60,user_id=6)
 	obj.add_items(alloted_rice = 5,remaining_amount=50,user_id=5)
+
+
+	obj.update(5,333,52)
+	obj.delete(4)
