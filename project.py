@@ -92,7 +92,7 @@ class Application(Administrator,User):
 		# 		from diff file
 		# pass
 		obj = Operations()
-		obj.add()
+		print(obj.add())
 
 	def delete_rec(self):
 		# TODO: Delete record by admin
