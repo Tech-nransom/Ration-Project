@@ -66,7 +66,7 @@ class Administrator:
 
 		temp = Database(self.username,self.password,self.database)
 		temp.add_customer(name,mem,key)
-		alloted_rice,remaining_amount,user_id,position = q*family,q*family,key,position
+		alloted_rice,remaining_amount,user_id,position = q*mem,q*mem,key,position
 		temp.add_items(alloted_rice,remaining_amount,user_id,position)
 
 class User:
@@ -137,7 +137,9 @@ class Application(Administrator,User):
 		key,position = obj.add()
 		print(key)
 		print(position)
-		self.RegisterUser(name = name,mem = int(mem),q = int(quantity),key = key,pos = position)
+		if int(key) == -1:
+			print("Invalid Key Detected....Not inserting in the database")
+		else: self.RegisterUser(name = name,mem = int(mem),q = int(quantity),key = key,position = position)
 		
  		
 
@@ -150,11 +152,14 @@ class Application(Administrator,User):
 		obj = Operations()
 		temp = Database(self.username,self.password,self.database)
 		key,position = obj.search()
-		if position != None:
-			obj.delete(temp.getPosition(key))
-			temp.delete(key)
+		if int(key) == -1:
+			print("Invalid key found")
 		else:
-			print("Position not found")
+			if position != None:
+				obj.delete(temp.getPosition(key))
+				temp.delete(key)
+			else:
+				print("Position not found")
 
 
 	def update_rec(self):
