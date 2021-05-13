@@ -143,6 +143,10 @@ class Application(Administrator,User):
 
 	def delete_rec(self):
 		# TODO: Delete record by admin
+		if self.username == None:
+			self.username = input("Username:")
+			self.password = input("Password:")
+			self.database = input("Database name:")
 		obj = Operations()
 		temp = Database(self.username,self.password,self.database)
 		key,position = obj.search()
@@ -154,6 +158,10 @@ class Application(Administrator,User):
 
 
 	def update_rec(self):
+		if self.username == None:
+			self.username = input("Username:")
+			self.password = input("Password:")
+			self.database = input("Database name:")
 		# TODO: update the existing record by admin 
 		#		Give appropriate msg if rec not present
 		obj = Operations()
