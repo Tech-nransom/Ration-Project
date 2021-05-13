@@ -20,7 +20,7 @@ class Administrator:
 			self.admin.title("Admin")
 			self.admin.minsize(width=300,height=100)
 
-			self.enter = ttk.Button(self.admin,text = "Enter",command = self.add_rec)
+			self.enter = ttk.Button(self.admin,text = "Enter",command = self.createWindow)
 			self.delete = ttk.Button(self.admin,text = "Delete",command = self.delete_rec)
 			self.update = ttk.Button(self.admin,text = "Update",command = self.update_rec)
 			self.enter.pack()
@@ -62,13 +62,11 @@ class Administrator:
 
 			self.password.delete(0,END)
 
-	def doTransaction(self,key,position):
-		name = input("Enter the Name:")
-		family = int(input("Enter Family members:"))
+	def RegisterUser(self,name,mem,q,key,position):
+
 		temp = Database(self.username,self.password,self.database)
-		temp.add_customer(name,family,key)
-		perPerson = 10
-		alloted_rice,remaining_amount,user_id,position = perPerson*family,perPerson*family,key,position
+		temp.add_customer(name,mem,key)
+		alloted_rice,remaining_amount,user_id,position = q*family,q*family,key,position
 		temp.add_items(alloted_rice,remaining_amount,user_id,position)
 
 class User:
@@ -95,20 +93,51 @@ class Application(Administrator,User):
 		master.title("Fingerprint Management")
 		master.minsize(width = 300,height = 100)
 		master.resizable(False,False)
+		self.username = None
+
+
+
+	def createWindow(self):
+		self.window = Toplevel(self.master)
+		Label(self.window,text = "Enter Users Name:   ").grid(row = 0,column=0)
+		self.name = ttk.Entry(self.window)
+		self.name.grid(row = 0,column=1)
+
+		Label(self.window,text="").grid(row=1,column=0)
+		Label(self.window,text = "Enter Users Family Members:   ").grid(row = 2,column=0)
+		self.family = ttk.Entry(self.window)
+		self.family.grid(row = 2,column=1)
+
+		Label(self.window,text="").grid(row=3,column=0)
+		Label(self.window,text = "Rice PerPerson:").grid(row = 4,column=0)
+		self.perPerson = StringVar()
+		self.q = ttk.Spinbox(self.window, from_ = 0, to=20, textvariable = self.perPerson,state = "readonly")
+		self.q.grid(row = 4,column=1)
+
+		self.register = ttk.Button(self.window,text = "Register",command = self.add_rec)
+		self.register.grid(row=5,column=1)
+
+
+		
 
 	def add_rec(self):
-		# TODO: Add record by admin
+		if self.username == None:
+			self.username = input("Username:")
+			self.password = input("Password:")
+			self.database = input("Database name:")
 
-		# 		from diff file
-		# pass
-		self.username = input("Username:")
-		self.password = input("Password:")
-		self.database = input("Database name:")
+		# Validation remaining
+
+		name = self.name.get()
+		mem = self.family.get()
+		quantity = self.perPerson.get()
+		print(name,mem,quantity)
+		self.window.destroy()
 		obj = Operations()
 		key,position = obj.add()
 		print(key)
 		print(position)
-		self.doTransaction(key,position)
+		self.RegisterUser(name = name,mem = int(mem),q = int(quantity),key = key,pos = position)
 		
  		
 
@@ -116,7 +145,7 @@ class Application(Administrator,User):
 		# TODO: Delete record by admin
 		obj = Operations()
 		temp = Database(self.username,self.password,self.database)
-		key,position = temp.search()
+		key,position = obj.search()
 		if position != None:
 			obj.delete(temp.getPosition(key))
 			temp.delete(key)
