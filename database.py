@@ -118,9 +118,7 @@ class Database:
 		sql = f"select name from customers where user_id = '{user_id}';"
 		self.mycursor.execute(sql)
 		val = (self.mycursor.fetchone())
-		return int(val[0]) if val else None
-
-
+		return (val[0]) if val else None
 
 
 if __name__ == "__main__":
