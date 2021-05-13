@@ -137,7 +137,7 @@ class Application(Administrator,User):
 		key,position = obj.add()
 		print(key)
 		print(position)
-		if int(key) == -1:
+		if (key) == -1:
 			print("Invalid Key Detected....Not inserting in the database")
 		else: self.RegisterUser(name = name,mem = int(mem),q = int(quantity),key = key,position = position)
 		
@@ -152,7 +152,7 @@ class Application(Administrator,User):
 		obj = Operations()
 		temp = Database(self.username,self.password,self.database)
 		key,position = obj.search()
-		if int(key) == -1:
+		if (key) == -1:
 			print("Invalid key found")
 		else:
 			if position != None:
