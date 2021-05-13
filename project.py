@@ -47,6 +47,10 @@ class Administrator:
 
 			self.msg = ttk.Label(self.admin,text = "")
 			self.msg.pack()
+			if self.username == None:
+				self.username = input("Username:")
+				self.password = input("Password:")
+				self.database = input("Database name:")
 		
 	def checkPassword(self):
 		if (self.password.get()) == self.PASSWORD:
@@ -79,6 +83,23 @@ class User:
 		self.user.title("User")
 		self.user.minsize(width=300,height=100)
 		self.user.register(False,False)
+
+		self.auth = ttk.Button(self.user,text = "Authenticate",command = self.verify)
+
+	def verify(self):
+		obj = Operations()
+		key,position = obj.search()
+		if (key) == -1:
+			print("Invalid key found")
+		else:
+			self.displayInfo(key)
+
+	def displayInfo(self,key):
+		temp = Database(self.username,self.password,self.database)
+		print(temp.getName(key))
+		print(temp.getFamilyMem(key))
+		print(temp.getAllotment(key))
+		print(temp.getRemaining(key))
 
 class Application(Administrator,User):
 	def __init__(self,master):

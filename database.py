@@ -114,6 +114,13 @@ class Database:
 		return int(val[0]) if val else None
 
 
+	def getName(self,user_id):
+		sql = f"select name from customers where user_id = '{user_id}';"
+		self.mycursor.execute(sql)
+		val = (self.mycursor.fetchone())
+		return int(val[0]) if val else None
+
+
 
 
 if __name__ == "__main__":
