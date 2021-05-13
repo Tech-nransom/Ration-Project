@@ -85,6 +85,7 @@ class User:
 		self.user.register(False,False)
 
 		self.auth = ttk.Button(self.user,text = "Authenticate",command = self.verify)
+		self.auth.pack()
 
 	def verify(self):
 		obj = Operations()
