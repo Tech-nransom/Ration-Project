@@ -47,10 +47,7 @@ class Administrator:
 
 			self.msg = ttk.Label(self.admin,text = "")
 			self.msg.pack()
-			if self.username == None:
-				self.username = input("Username:")
-				self.password = input("Password:")
-				self.database = input("Database name:")
+			
 		
 	def checkPassword(self):
 		if (self.password.get()) == self.PASSWORD:
@@ -58,6 +55,10 @@ class Administrator:
 			self.msg["text"] = "Successfull Login"
 			self.msg.config(foreground = "green")
 			self._flg = True
+			if self.username == None:
+				self.username = input("Username:")
+				self.password = input("Password:")
+				self.database = input("Database name:")
 			self.adminWindow()
 		else:
 			print("Invalid Password")
