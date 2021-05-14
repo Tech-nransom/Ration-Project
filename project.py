@@ -102,8 +102,10 @@ class User:
 
 	def displayInfo(self,key):
 		temp = Database(self.username,self.password,self.database)
+		print(key)
 		self.infoPage(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key),key)
 		# self.infoPage("yugandhar",4,10,15,key)
+		print(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key))
 
 	def infoPage(self,name,members,allotment,remaining,key):
 		self.user.withdraw()
