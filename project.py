@@ -59,10 +59,10 @@ class Administrator:
 			self.msg["text"] = "Successfull Login"
 			self.msg.config(foreground = "green")
 			self._flg = True
-			# if self.username == None:
-			# 	self.username = input("Username:")
-			# 	self.password = input("Password:")
-			# 	self.database = input("Database name:")
+			if self.username == None:
+				self.username = input("Username:")
+				self.password = input("Password:")
+				self.database = input("Database name:")
 			self.adminWindow()
 		else:
 			print("Invalid Password")
@@ -141,10 +141,10 @@ class User:
 
 	def isOk(self,key,remaining):
 		try:
-			# if self.username == None:
-			# 	self.username = input("Username:")
-			# 	self.password = input("Password:")
-			# 	self.database = input("Database name:")
+			if self.username == None:
+				self.username = input("Username:")
+				self.password = input("Password:")
+				self.database = input("Database name:")
 
 			temp = Database(self.username,self.password,self.database)
 			deduct = int(self.amount.get())
@@ -171,13 +171,13 @@ class Application(Administrator,User):
 		super().__init__()
 		ttk.Label(master=master,text = "Select Your Choice").pack()
 
-		self.username = "root"
-		self.password = "root"
-		self.database = "sample2"
+		# self.username = "root"
+		# self.password = "root"
+		# self.database = "sample2"
 
 
 		self.PASSWORD = "admin"
-		
+
 		self.master = master
 		self.master.geometry("+300+300")
 		self.admin_b = ttk.Button(master,text = "Administrator",command = self.adminWindow)
@@ -187,6 +187,8 @@ class Application(Administrator,User):
 		master.title("Fingerprint Management")
 		master.minsize(width = 300,height = 300)
 		master.resizable(False,False)
+
+		self.username = None
 
 	def createWindow(self):
 		self.admin.withdraw()
@@ -223,10 +225,10 @@ class Application(Administrator,User):
 		
 
 	def add_rec(self):
-		# if self.username == None:
-		# 	self.username = input("Username:")
-		# 	self.password = input("Password:")
-		# 	self.database = input("Database name:")
+		if self.username == None:
+			self.username = input("Username:")
+			self.password = input("Password:")
+			self.database = input("Database name:")
 
 		# Validation remaining
 
@@ -247,10 +249,10 @@ class Application(Administrator,User):
 
 	def delete_rec(self):
 		# TODO: Delete record by admin
-		# if self.username == None:
-		# 	self.username = input("Username:")
-		# 	self.password = input("Password:")
-		# 	self.database = input("Database name:")
+		if self.username == None:
+			self.username = input("Username:")
+			self.password = input("Password:")
+			self.database = input("Database name:")
 		obj = Operations()
 		temp = Database(self.username,self.password,self.database)
 		key,position = obj.search()
@@ -265,10 +267,10 @@ class Application(Administrator,User):
 
 
 	def update_rec(self):
-		# if self.username == None:
-		# 	self.username = input("Username:")
-		# 	self.password = input("Password:")
-		# 	self.database = input("Database name:")
+		if self.username == None:
+			self.username = input("Username:")
+			self.password = input("Password:")
+			self.database = input("Database name:")
 		# TODO: update the existing record by admin 
 		#		Give appropriate msg if rec not present
 		obj = Operations()
