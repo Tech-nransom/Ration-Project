@@ -48,6 +48,12 @@ class Database:
 		except :
 			print("Already Exists")
 
+	def deduct(self,user_id,remaining_amount):
+		sql = f"update items set remaining_amount = '{remaining_amount}' where user_id = '{user_id}';"
+		self.mycursor.execute(sql)
+		self.mydb.commit()
+		print("Deduction successful")
+
 	def add_items(self,alloted_rice,remaining_amount,user_id,position):
 		sql = f"insert into items(alloted_rice,remaining_amount,user_id,order_id) values('{alloted_rice}','{remaining_amount}','{user_id}','{position}');"
 		try:
