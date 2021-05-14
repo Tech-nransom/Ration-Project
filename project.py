@@ -88,8 +88,8 @@ class User:
 		self.user.title("User")
 		self.user.resizable(False,False)
 		self.user.geometry("300x300+300+300")
-		self.auth = ttk.Button(self.user,text = "Authenticate",command = lambda :self.displayInfo(1))
-		# self.auth = ttk.Button(self.user,text = "Authenticate",command = self.verify)
+		# self.auth = ttk.Button(self.user,text = "Authenticate",command = lambda :self.displayInfo(key))
+		self.auth = ttk.Button(self.user,text = "Authenticate",command = self.verify)
 		self.auth.pack()
 
 	def verify(self):
