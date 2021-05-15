@@ -24,7 +24,7 @@ class Administrator:
 
 			self.enter = ttk.Button(self.admin,text = "Enter",command = self.createWindow)
 			self.delete = ttk.Button(self.admin,text = "Delete",command = self.delete_rec)
-			self.update = ttk.Button(self.admin,text = "Update",command = self.update_rec)
+			self.update = ttk.Button(self.admin,text = "Search",command = self.update_rec)
 			self.enter.pack()
 			self.delete.pack()
 			self.update.pack()
@@ -139,12 +139,13 @@ class User:
 		Label(self.page).grid(row = 8,column = 0)
 		Label(self.page,text = "Enter the Amount To Withdraw:",font = fontStyle, justify=LEFT,anchor="w").grid(sticky = W,row = 9,column = 0)
 		self.amount.grid(row = 9,column=1)
+		self.status = Label(self.page,text = "").grid(row = 10,column = 1)
 
 		self.ok= ttk.Button(self.page,text = "OK",command = lambda :self.motor(key,remaining))
 		self.cancel = ttk.Button(self.page,text = "CANCEL",command = on_closing)
 
-		self.ok.grid(row = 10,column=1,padx = 6)
-		self.cancel.grid(row = 10,column=2)
+		self.ok.grid(row = 11,column=1,padx = 6)
+		self.cancel.grid(row = 11,column=2)
 
 	def isOk(self,key,remaining):
 		try:
@@ -155,10 +156,11 @@ class User:
 
 			temp = Database(self.username,self.password,self.database)
 			deduct = int(self.amount.get())
+			self.amount = deduct
 			if deduct > int(remaining):
 				return False
 			else:
-				self.amount = int(remaining) - deduct
+				# self.amount = int(remaining) - deduct
 				temp.deduct(key,(int(remaining) - deduct))
 			return True
 		except :
@@ -168,11 +170,16 @@ class User:
 	def motor(self,key,remaining):
 		if self.isOk(key,remaining):
 			playMotor() 
-			showinfo("Amount",f"Please Pay: {self.amount}")
+			# showinfo("Amount",f"Please Pay: {self.amount}")
+			self.amount = 5
+			self.status["text"] = f"Please Pay Amount: {self.price*self.amount}"
+			self.status.config(foreground = "green")
 			self.page.destroy()
 		else:
-			showerror("Invalid Enter","Please Check the Amount Entered")
-			self.page.destroy()
+			self.status["text"] = "Please Check the Amount Entered"
+			self.status.config(foreground = "red")
+			# showerror("Invalid Enter","Please Check the Amount Entered")
+			# self.page.destroy()
 
 
 
@@ -310,6 +317,7 @@ class Application(Administrator,User):
 		#		Give appropriate msg if rec not present
 		obj = Operations()
 		key,position = (obj.search())
+		showinfo("Status","User Present")
 		
 
 def main():
