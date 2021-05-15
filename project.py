@@ -102,18 +102,18 @@ class User:
 		else:
 			self.displayInfo(key)
 
-	def displayInfo(self,key):
+	def displayInfo(self,key,msg = ""):
 		try:
 			temp = Database(self.username,self.password,self.database)
 
 			print(key)
-			self.infoPage(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key),key)
+			self.infoPage(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key),key,msg)
 			# self.infoPage("yugandhar",4,10,15,key)
 			print(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key))
 		except :
 			showerror("Database Error","Admin required to Login")
 
-	def infoPage(self,name,members,allotment,remaining,key):
+	def infoPage(self,name,members,allotment,remaining,key,msg = ""):
 		self.user.withdraw()
 		fontStyle = tkFont.Font(family="Times", size=15)
 		self.page = Toplevel(self.user)
@@ -140,7 +140,11 @@ class User:
 		Label(self.page).grid(row = 8,column = 0)
 		Label(self.page,text = "Enter the Amount To Withdraw:",font = fontStyle, justify=LEFT,anchor="w").grid(sticky = W,row = 9,column = 0)
 		self.amount.grid(row = 9,column=1)
-		self.status = Label(self.page,text = "")
+		if msg == "":
+			self.status = Label(self.page,text = "")
+		else:
+			self.status = Label(self.page,text = msg,foreground = "red")
+
 		self.status.grid(row = 10,column = 1)
 
 		self.ok= ttk.Button(self.page,text = "OK",command = lambda :self.motor(key,remaining))
@@ -183,7 +187,7 @@ class User:
 			self.status.config(foreground = "red")
 			# showerror("Invalid Enter","Please Check the Amount Entered")
 			self.page.destroy()
-			self.displayInfo(key)
+			self.displayInfo(key,msg = "Please Check the Amount Entered" )
 
 
 
