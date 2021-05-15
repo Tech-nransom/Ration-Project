@@ -2,9 +2,6 @@ import mysql.connector
 
 class Database:
 	def __init__(self,username,password,database):
-		self.username = username
-		self.password = password
-		self.database = database
 		self.mydb,status = self.checkIfAllright(username,password)
 		if status:
 			self.mycursor = self.mydb.cursor(buffered=True)

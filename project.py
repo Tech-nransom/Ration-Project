@@ -4,7 +4,7 @@ from modules import Operations
 from database import *
 import tkinter.font as tkFont
 from motor import playMotor
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror,showinfo
 
 class Administrator:
 	def __init__(self):
@@ -59,10 +59,11 @@ class Administrator:
 			self.msg["text"] = "Successfull Login"
 			self.msg.config(foreground = "green")
 			self._flg = True
-			if self.username == None:
-				self.username = input("Username:")
-				self.password = input("Password:")
-				self.database = input("Database name:")
+			# if self.username == None:
+			# 	self.username = input("Username:")
+			# 	self.password = input("Password:")
+			# 	self.database = input("Database name:")
+			self.getDatabaseCred()
 			self.adminWindow()
 		else:
 			print("Invalid Password")
@@ -101,11 +102,15 @@ class User:
 			self.displayInfo(key)
 
 	def displayInfo(self,key):
-		temp = Database(self.username,self.password,self.database)
-		print(key)
-		self.infoPage(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key),key)
-		# self.infoPage("yugandhar",4,10,15,key)
-		print(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key))
+		try:
+			temp = Database(self.username,self.password,self.database)
+
+			print(key)
+			self.infoPage(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key),key)
+			# self.infoPage("yugandhar",4,10,15,key)
+			print(temp.getName(key),temp.getFamilyMem(key),temp.getAllotment(key),temp.getRemaining(key))
+		except :
+			showerror("Database Error","Admin required to Login")
 
 	def infoPage(self,name,members,allotment,remaining,key):
 		self.user.withdraw()
@@ -143,16 +148,17 @@ class User:
 
 	def isOk(self,key,remaining):
 		try:
-			if self.username == None:
-				self.username = input("Username:")
-				self.password = input("Password:")
-				self.database = input("Database name:")
+			# if self.username == None:
+			# 	self.username = input("Username:")
+			# 	self.password = input("Password:")
+			# 	self.database = input("Database name:")
 
 			temp = Database(self.username,self.password,self.database)
 			deduct = int(self.amount.get())
 			if deduct > int(remaining):
 				return False
 			else:
+				self.amount = int(remaining) - deduct
 				temp.deduct(key,(int(remaining) - deduct))
 			return True
 		except :
@@ -162,6 +168,8 @@ class User:
 	def motor(self,key,remaining):
 		if self.isOk(key,remaining):
 			playMotor() 
+			showinfo("Amount",f"Please Pay: {self.amount}")
+			self.page.destroy()
 		else:
 			showerror("Invalid Enter","Please Check the Amount Entered")
 			self.page.destroy()
@@ -190,7 +198,32 @@ class Application(Administrator,User):
 		master.minsize(width = 300,height = 300)
 		master.resizable(False,False)
 
-		self.username = None
+		# self.username = None
+
+	def getDatabaseCred(self):
+		self.DatabasePg = Toplevel(self.master)
+		self.DatabasePg.geometry("300x300+300+300")
+		Label(self.DatabasePg,text = "UserName :").grid(row = 1, column = 0)
+		self.d_uname = Entry(self.DatabasePg)
+		self.d_uname.grid(row = 1, column = 1)
+		Label(self.DatabasePg,text = "Password :").grid(row = 2, column = 0)
+		self.d_pass = Entry(self.DatabasePg)
+		self.d_pass.grid(row = 2, column = 1)
+		Label(self.DatabasePg,text = "Database :").grid(row = 3, column = 0)
+		self.d_base = Entry(self.DatabasePg)
+		self.d_base.grid(row = 3, column = 1)
+
+
+		self.button = ttk.Button(self.DatabasePg,text = "Confirm",command = lambda :self.credentials(self.d_uname.get(),self.d_pass.get(),self.d_base.get()))
+		self.button.grid(row = 4,column=1)
+
+	def credentials(self,username,password,database):
+		self.username = username
+		self.password = password
+		self.database = database
+		print(self.username,self.password,self.database)
+		self.DatabasePg.destroy()
+
 
 	def createWindow(self):
 		self.admin.withdraw()
@@ -227,10 +260,10 @@ class Application(Administrator,User):
 		
 
 	def add_rec(self):
-		if self.username == None:
-			self.username = input("Username:")
-			self.password = input("Password:")
-			self.database = input("Database name:")
+		# if self.username == None:
+		# 	self.username = input("Username:")
+		# 	self.password = input("Password:")
+		# 	self.database = input("Database name:")
 
 		# Validation remaining
 
@@ -251,10 +284,10 @@ class Application(Administrator,User):
 
 	def delete_rec(self):
 		# TODO: Delete record by admin
-		if self.username == None:
-			self.username = input("Username:")
-			self.password = input("Password:")
-			self.database = input("Database name:")
+		# if self.username == None:
+		# 	self.username = input("Username:")
+		# 	self.password = input("Password:")
+		# 	self.database = input("Database name:")
 		obj = Operations()
 		temp = Database(self.username,self.password,self.database)
 		key,position = obj.search()
@@ -269,10 +302,10 @@ class Application(Administrator,User):
 
 
 	def update_rec(self):
-		if self.username == None:
-			self.username = input("Username:")
-			self.password = input("Password:")
-			self.database = input("Database name:")
+		# if self.username == None:
+		# 	self.username = input("Username:")
+		# 	self.password = input("Password:")
+		# 	self.database = input("Database name:")
 		# TODO: update the existing record by admin 
 		#		Give appropriate msg if rec not present
 		obj = Operations()
