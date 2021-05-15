@@ -5,6 +5,7 @@ from database import *
 import tkinter.font as tkFont
 from motor import playMotor
 from tkinter.messagebox import showerror,showinfo
+import time
 
 class Administrator:
 	def __init__(self):
@@ -139,7 +140,8 @@ class User:
 		Label(self.page).grid(row = 8,column = 0)
 		Label(self.page,text = "Enter the Amount To Withdraw:",font = fontStyle, justify=LEFT,anchor="w").grid(sticky = W,row = 9,column = 0)
 		self.amount.grid(row = 9,column=1)
-		self.status = Label(self.page,text = "").grid(row = 10,column = 1)
+		self.status = Label(self.page,text = "")
+		self.status.grid(row = 10,column = 1)
 
 		self.ok= ttk.Button(self.page,text = "OK",command = lambda :self.motor(key,remaining))
 		self.cancel = ttk.Button(self.page,text = "CANCEL",command = on_closing)
@@ -174,6 +176,7 @@ class User:
 			self.amount = 5
 			self.status["text"] = f"Please Pay Amount: {self.price*self.amount}"
 			self.status.config(foreground = "green")
+			time.sleep(3)
 			self.page.destroy()
 		else:
 			self.status["text"] = "Please Check the Amount Entered"
