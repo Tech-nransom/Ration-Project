@@ -173,7 +173,7 @@ class User:
 		if self.isOk(key,remaining):
 			playMotor() 
 			# showinfo("Amount",f"Please Pay: {self.amount}")
-			self.amount = 5
+			self.price = 5
 			self.status["text"] = f"Please Pay Amount: {self.price*self.amount}"
 			self.status.config(foreground = "green")
 			time.sleep(3)
@@ -182,7 +182,8 @@ class User:
 			self.status["text"] = "Please Check the Amount Entered"
 			self.status.config(foreground = "red")
 			# showerror("Invalid Enter","Please Check the Amount Entered")
-			# self.page.destroy()
+			self.page.destroy()
+			self.displayInfo(key)
 
 
 
